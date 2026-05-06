@@ -1,1 +1,1 @@
-# groupe10-ehesp.github.io
+Cliquer sur le document "index" pour afficher la bibliographie et le glossaire
