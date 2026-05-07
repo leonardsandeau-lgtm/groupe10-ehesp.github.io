@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Note FALC — Politique handicap dans nos hôpitaux</title>
+  <style>
+    :root {
+      --blue: #1F3864;
+      --mid: #2E75B6;
+      --light: #EBF3FB;
+      --gray: #595959;
+      --text: #1A1A1A;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      color: var(--text);
+      background: #fafafa;
+      line-height: 1.7;
+    }
+    header {
+      background: var(--blue);
+      color: white;
+      padding: 2rem 2rem 1.4rem;
+      border-bottom: 4px solid var(--mid);
+    }
+    header .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 0.4rem;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+    header p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+    }
+    .back-bar {
+      background: white;
+      padding: 0.7rem 2rem;
+      border-bottom: 1px solid #ddd;
+    }
+    .back-bar a {
+      color: var(--mid);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .back-bar a:hover { text-decoration: underline; }
+    .nav-falc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      background: white;
+      padding: 0.8rem 2rem;
+      border-bottom: 1px solid #ddd;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav-falc button {
+      background: transparent;
+      border: 1px solid var(--mid);
+      border-radius: 20px;
+      color: var(--mid);
+      font-size: 13px;
+      font-weight: bold;
+      padding: 0.3rem 1rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .nav-falc button:hover,
+    .nav-falc button.active {
+      background: var(--light);
+    }
+    main { max-width: 760px; margin: 0 auto; padding: 2rem; }
+    .falc-badge {
+      display: inline-block;
+      background: var(--light);
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 3px;
+      margin-bottom: 1.5rem;
+    }
+    .page { margin-bottom: 3.5rem; }
+    .page-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--mid);
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+    }
+    .pic-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .pic-row svg { flex-shrink: 0; }
+    .big-text {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--blue);
+      line-height: 1.4;
+    }
+    .sub-text {
+      font-size: 17px;
+      color: var(--text);
+      margin-top: 0.4rem;
+      line-height: 1.6;
+    }
+    .num-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0;
+    }
+    .num-box {
+      text-align: center;
+      padding: 1rem 1.5rem;
+      background: var(--light);
+      border: 1px solid #c6ddf0;
+      border-radius: 6px;
+      flex: 1;
+      min-width: 120px;
+    }
+    .num-big {
+      font-size: 44px;
+      font-weight: bold;
+      color: var(--blue);
+      line-height: 1;
+    }
+    .num-label {
+      font-size: 14px;
+      color: var(--gray);
+      margin-top: 6px;
+    }
+    .step-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .step-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .warn-box {
+      border: 1px solid #f0c040;
+      background: #fffbea;
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .warn-box p {
+      font-size: 17px;
+      line-height: 1.7;
+      color: #5a4000;
+    }
+    .warn-box p + p { margin-top: 0.4rem; }
+    .dl-word {
+      display: grid;
+      gap: 0;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .dl-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      border-bottom: 1px solid #eee;
+    }
+    .dl-row:last-child { border-bottom: none; }
+    .dl-row:nth-child(even) { background: var(--light); }
+    .dl-row dt {
+      font-weight: bold;
+      color: var(--blue);
+      padding: 0.6rem 0.9rem;
+      font-size: 16px;
+      border-right: 1px solid #ddd;
+    }
+    .dl-row dd {
+      padding: 0.6rem 0.9rem;
+      font-size: 16px;
+    }
+    .hidden { display: none; }
+    footer {
+      text-align: center;
+      font-size: 11px;
+      color: var(--gray);
+      padding: 2rem;
+      border-top: 1px solid #ddd;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="label">Séminaire EHESP — Ateliers communs de santé publique, mai 2026</div>
+  <h1>Politique handicap mutualisée dans la FPH</h1>
+  <p>Note en Facile à Lire et à Comprendre (FALC) — Groupe 10A</p>
+</header>
+
+<div class="back-bar">
+  <a href="index.html">← Retour aux ressources</a>
+</div>
+
+<div class="nav-falc" id="nav"></div>
+
+<main>
+  <div class="falc-badge">Facile à lire et à comprendre</div>
+
+  <div class="page" id="p1">
+    <div class="page-title">Pourquoi cette note ?</div>
+
+    <div class="pic-row">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" aria-hidden="true">
+        <circle cx="45" cy="28" r="14" stroke="#1F3864" stroke-width="2.5"/>
+        <path d="M20 78 C20 58 70 58 70 78" stroke="#1F3864" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <circle cx="45" cy="28" r="6" fill="#1F3864" opacity="0.15"/>
+        <path d="M60 38 L72 26 M72 26 L66 26 M72 26 L72 32" stroke="#1F3864" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="big-text">Un hôpital doit employer des personnes handicapées.</div>
+        <div class="sub-text">La loi oblige les hôpitaux à cela.</div>
+      </div>
+    </div>
+
+    <div class="pic-row">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" aria-hidden="true">
+        <rect x="10" y="50" width="10" height="30" rx="2" stroke="#1F3864" stroke-width="2" fill="none"/>
+        <rect x="28" y="35" width="10" height="45" rx="2" stroke="#1F3864" stroke-width="2" fill="none"/>
+        <rect x="46" y="20" width="10" height="60" rx="2" stroke="#1F3864" stroke-width="2" fill="#1F3864" opacity="0.12"/>
+        <rect x="64" y="10" width="10" height="70" rx="2" stroke="#1F3864" stroke-width="2" fill="none"/>
+        <path d="M8 85 L82 85" stroke="#1F3864" stroke-width="2" stroke-linecap="round"/>
+        <text x="51" y="15" text-anchor="middle" font-size="11" fill="#1F3864" font-weight="bold">6 %</text>
+      </svg>
+      <div>
+        <div class="big-text">L'objectif est 6 personnes sur 100.</div>
+        <div class="sub-text">Ce chiffre est fixé par la loi.</div>
+      </div>
+    </div>
+
+    <div class="num-row">
+      <div class="num-box">
+        <div class="num-big">6 %</div>
+        <div class="num-label">objectif légal</div>
+      </div>
+      <div class="num-box">
+        <div class="num-big">5,9 %</div>
+        <div class="num-label">moyenne nationale hôpitaux</div>
+      </div>
+      <div class="num-box">
+        <div class="num-big">3,2 %</div>
+        <div class="num-label">dans nos hôpitaux</div>
+      </div>
+    </div>
+
+    <div class="pic-row" style="margin-top:1.5rem">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" aria-hidden="true">
+        <rect x="18" y="20" width="54" height="54" rx="4" stroke="#1F3864" stroke-width="2.5" fill="none"/>
+        <path d="M30 47 L40 57 L60 35" stroke="#1F3864" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M18 32 L72 32" stroke="#1F3864" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <text x="45" y="16" text-anchor="middle" font-size="11" fill="#1F3864">pénalité</text>
+      </svg>
+      <div>
+        <div class="big-text">Nos hôpitaux paient 1,1 million d'euros par an.</div>
+        <div class="sub-text">C'est une pénalité car on n'atteint pas 6 %.</div>
+      </div>
+    </div>
+
+    <div class="pic-row">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" aria-hidden="true">
+        <path d="M45 15 L55 35 L78 38 L62 54 L66 77 L45 66 L24 77 L28 54 L12 38 L35 35 Z" stroke="#1F3864" stroke-width="2.5" fill="none"/>
+        <path d="M45 15 L55 35 L78 38 L62 54 L66 77 L45 66 L24 77 L28 54 L12 38 L35 35 Z" fill="#1F3864" opacity="0.08"/>
+      </svg>
+      <div>
+        <div class="big-text">Recruter plus de personnes handicapées, c'est mieux pour tous.</div>
+        <div class="sub-text">On évite la pénalité. On enrichit les équipes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="p2">
+    <div class="page-title">Les difficultés aujourd'hui</div>
+
+    <div class="pic-row">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" aria-hidden="true">
+        <circle cx="45" cy="45" r="28" stroke="#1F3864" stroke-width="2.5"/>
+        <path d="M45 30 L45 50" stroke="#1F3864" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="45" cy="60" r="3" fill="#1F3864"/>
+      </svg>
+      <div>
+        <div class="big-text">Il n'y a pas de procédure commune.</div>
+        <div class="sub-text">Chaque hôpital fait différemment.</div>
+      </div>
+    </div>
+
+    <div class="pic-row">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" aria-hidden="true">
+        <rect x="12" y="30" width="28" height="36" rx="3" stroke="#1F3864" stroke-width="2" fill="none"/>
+        <rect x="50" y="22" width="28" height="44" rx="3" stroke="#1F3864" stroke-width="2" fill="none"/>
+        <path d="M38 45 L52 45" stroke="#1F3864" stroke-width="1.5" stroke-dasharray="3 3"/>
+      </svg>
+      <div>
+        <div class="big-text">Les petits hôpitaux ont moins de moyens.</div>
+        <div class="sub-text">Ils ne peuvent pas tout faire seuls.</div>
+      </div>
+    </div>
+
+    <div class="pic-row">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" aria-hidden="true">
+        <circle cx="45" cy="32" r="13" stroke="#1F3864" stroke-width="2.5" fill="none"/>
+        <path d="M22 75 C22 57 68 57 68 75" stroke="#1F3864" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <text x="68" y="28" font-size="18" fill="#1F3864" font-weight="bold">?</text>
+      </svg>
+      <div>
+        <div class="big-text">Le référent handicap n'a pas assez de temps.</div>
+        <div class="sub-text">Souvent, il n'est pas assez formé non plus.</div>
+      </div>
+    </div>
+
+    <div class="pic-row">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" aria-hidden="true">
+        <circle cx="25" cy="55" r="14" stroke="#1F3864" stroke-width="2" fill="none"/>
+        <circle cx="65" cy="55" r="14" stroke="#1F3864" stroke-width="2" fill="none"/>
+        <path d="M38 45 L52 45 M45 38 L45 52" stroke="#1F3864" stroke-width="2" stroke-linecap="round"/>
+        <path d="M25 30 L65 30" stroke="#1F3864" stroke-width="2" stroke-linecap="round"/>
+        <path d="M45 20 L45 30" stroke="#1F3864" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="45" cy="18" r="4" stroke="#1F3864" stroke-width="2" fill="none"/>
+      </svg>
+      <div>
+        <div class="big-text">La solution : travailler ensemble.</div>
+        <div class="sub-text">Tous les hôpitaux du GHT partagent leurs moyens.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="p3">
+    <div class="page-title">Le plan en 5 étapes</div>
+
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div class="pic-row" style="margin-bottom:0">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" aria-hidden="true">
+          <rect x="8" y="10" width="44" height="40" rx="4" stroke="#1F3864" stroke-width="2" fill="none"/>
+          <path d="M8 22 L52 22" stroke="#1F3864" stroke-width="1.5"/>
+          <path d="M18 34 L42 34 M18 42 L35 42" stroke="#1F3864" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div>
+          <div class="big-text">Organiser qui décide.</div>
+          <div class="sub-text">Nommer un coordinateur handicap. Durée : 0 à 6 mois.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div class="pic-row" style="margin-bottom:0">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" aria-hidden="true">
+          <path d="M10 50 L30 15 L50 50 Z" stroke="#1F3864" stroke-width="2" fill="none"/>
+          <path d="M20 50 L40 50" stroke="#1F3864" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="30" cy="38" r="4" stroke="#1F3864" stroke-width="1.5" fill="none"/>
+        </svg>
+        <div>
+          <div class="big-text">Faire un état des lieux.</div>
+          <div class="sub-text">Signer une convention avec le FIPHFP. Durée : 3 à 12 mois.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div class="pic-row" style="margin-bottom:0">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" aria-hidden="true">
+          <circle cx="22" cy="22" r="10" stroke="#1F3864" stroke-width="2" fill="none"/>
+          <circle cx="40" cy="22" r="10" stroke="#1F3864" stroke-width="2" fill="none"/>
+          <path d="M22 45 C22 35 40 35 40 45" stroke="#1F3864" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M30 14 L30 30" stroke="#1F3864" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 2"/>
+        </svg>
+        <div>
+          <div class="big-text">Recruter ensemble.</div>
+          <div class="sub-text">Organiser un job dating handicap. Durée : 6 à 18 mois.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div class="pic-row" style="margin-bottom:0">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" aria-hidden="true">
+          <rect x="10" y="12" width="40" height="30" rx="3" stroke="#1F3864" stroke-width="2" fill="none"/>
+          <path d="M18 24 L28 24 M18 30 L35 30 M18 36 L30 36" stroke="#1F3864" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="40" cy="44" r="10" stroke="#1F3864" stroke-width="2" fill="none"/>
+          <path d="M34 44 L38 48 L46 40" stroke="#1F3864" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <div class="big-text">Former les équipes.</div>
+          <div class="sub-text">Sensibiliser tous les professionnels. En continu.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num">5</div>
+      <div class="pic-row" style="margin-bottom:0">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" aria-hidden="true">
+          <circle cx="30" cy="30" r="20" stroke="#1F3864" stroke-width="2" fill="none"/>
+          <path d="M30 14 L30 30 L42 30" stroke="#1F3864" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="30" cy="30" r="3" fill="#1F3864"/>
+        </svg>
+        <div>
+          <div class="big-text">Mesurer les résultats.</div>
+          <div class="sub-text">Compter les recrutements chaque année. En continu.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="p4">
+    <div class="page-title">Le job dating handicap</div>
+
+    <div class="pic-row">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" aria-hidden="true">
+        <rect x="10" y="18" width="70" height="62" rx="5" stroke="#1F3864" stroke-width="2.5" fill="none"/>
+        <path d="M10 32 L80 32" stroke="#1F3864" stroke-width="1.5"/>
+        <path d="M30 18 L30 10 M60 18 L60 10" stroke="#1F3864" stroke-width="2" stroke-linecap="round"/>
+        <text x="45" y="60" text-anchor="middle" font-size="28" fill="#1F3864">♿</text>
+      </svg>
+      <div>
+        <div class="big-text">Un job dating, c'est quoi ?</div>
+        <div class="sub-text">Des candidats rencontrent des recruteurs. Les entretiens sont courts. Cela se passe en novembre.</div>
+      </div>
+    </div>
+
+    <div class="pic-row">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" aria-hidden="true">
+        <circle cx="25" cy="30" r="10" stroke="#1F3864" stroke-width="2" fill="none"/>
+        <path d="M12 55 C12 42 38 42 38 55" stroke="#1F3864" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <circle cx="65" cy="30" r="10" stroke="#1F3864" stroke-width="2" fill="none"/>
+        <path d="M52 55 C52 42 78 42 78 55" stroke="#1F3864" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <path d="M40 42 L50 42" stroke="#1F3864" stroke-width="2" stroke-linecap="round"/>
+        <path d="M44 38 L40 42 L44 46" stroke="#1F3864" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M46 38 L50 42 L46 46" stroke="#1F3864" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <div class="big-text">Qui vient ?</div>
+        <div class="sub-text">Les candidats orientés par Cap Emploi. Les cadres de chaque hôpital. La MDPH. Un ergonome.</div>
+      </div>
+    </div>
+
+    <div class="pic-row">
+      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" aria-hidden="true">
+        <circle cx="45" cy="45" r="28" stroke="#1F3864" stroke-width="2.5" fill="none"/>
+        <path d="M45 20 L45 45 L62 45" stroke="#1F3864" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="45" cy="45" r="3.5" fill="#1F3864"/>
+      </svg>
+      <div>
+        <div class="big-text">Le coût est pris en charge.</div>
+        <div class="sub-text">Le FIPHFP finance l'événement. C'est déduit de la pénalité.</div>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true" style="flex-shrink:0;margin-top:2px">
+        <path d="M18 6 L32 30 L4 30 Z" stroke="#a07000" stroke-width="2" fill="none"/>
+        <path d="M18 15 L18 23" stroke="#a07000" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="18" cy="27" r="1.5" fill="#a07000"/>
+      </svg>
+      <div>
+        <p style="font-weight:bold;margin-bottom:6px">Points d'attention</p>
+        <p>Préparer les cadres avant l'événement.</p>
+        <p>Rendre le lieu accessible à tous (fauteuil roulant, langue des signes).</p>
+        <p>Parler des compétences, pas seulement du handicap.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="p5">
+    <div class="page-title">Les mots importants</div>
+    <dl class="dl-word">
+      <div class="dl-row"><dt>GHT</dt><dd>Groupe d'hôpitaux qui travaillent ensemble sur un territoire.</dd></div>
+      <div class="dl-row"><dt>FIPHFP</dt><dd>Fonds qui finance les actions handicap dans les hôpitaux.</dd></div>
+      <div class="dl-row"><dt>Référent handicap</dt><dd>Personne chargée du handicap dans chaque hôpital.</dd></div>
+      <div class="dl-row"><dt>SEEPH</dt><dd>Semaine pour l'emploi des personnes handicapées. En novembre.</dd></div>
+      <div class="dl-row"><dt>RQTH</dt><dd>Document officiel qui reconnaît le handicap d'une personne au travail.</dd></div>
+      <div class="dl-row"><dt>MDPH</dt><dd>Organisme qui délivre la RQTH et conseille sur les aides.</dd></div>
+      <div class="dl-row"><dt>Cap Emploi</dt><dd>Organisme spécialisé qui aide les personnes handicapées à trouver un emploi.</dd></div>
+    </dl>
+  </div>
+
+</main>
+
+<footer>
+  Séminaire commun de santé publique EHESP · Groupe 10A · Mai 2026
+</footer>
+
+<script>
+const pages = [
+  {id:'p1', label:'Pourquoi ?'},
+  {id:'p2', label:'Les difficultés'},
+  {id:'p3', label:'Le plan'},
+  {id:'p4', label:'Le job dating'},
+  {id:'p5', label:'Les mots clés'}
+];
+const nav = document.getElementById('nav');
+let active = null;
+pages.forEach(p => {
+  const btn = document.createElement('button');
+  btn.textContent = p.label;
+  btn.onclick = () => {
+    if (active === p.id) {
+      pages.forEach(pp => document.getElementById(pp.id).classList.remove('hidden'));
+      active = null;
+      nav.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    } else {
+      pages.forEach(pp => {
+        document.getElementById(pp.id).classList.toggle('hidden', pp.id !== p.id);
+      });
+      active = p.id;
+      nav.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  };
+  nav.appendChild(btn);
+});
+</script>
+</body>
+</html>
